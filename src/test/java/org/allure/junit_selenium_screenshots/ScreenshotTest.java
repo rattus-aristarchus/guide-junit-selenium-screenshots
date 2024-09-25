@@ -1,13 +1,14 @@
 package org.allure.junit_selenium_screenshots;
 
-import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class StepTest {
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+public class ScreenshotTest {
 
     private static ChromeDriver driver;
 
@@ -21,10 +22,14 @@ public class StepTest {
 
     @Test
     public void lambdaStepTest() {
-        final String localParameter = "parameter value";
-        Allure.step(String.format("Parent lambda step with parameter [%s]", localParameter), (step) -> {
-            step.parameter("parameter", localParameter);
-        });
+        driver.get("https://en.wikipedia.org/wiki/Software_testing");
+
+        assertFalse(driver.getTitle().contains("Software testing"));
+    }
+
+    @AfterAll
+    public static void teardownDriver() {
+        driver.quit();
     }
 
 
